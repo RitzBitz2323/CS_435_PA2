@@ -17,8 +17,9 @@ public class MinHash {
         this.numPermutations = numPermutations;
         allDocs = new ArrayList<>();
         initializeDocumentList();
-        initializeTermDocumentMatrix();
-        initializeMinHashMatrix();
+
+//        TermDocumentMatrix tdMatrix = new TermDocumentMatrix();
+//        MinHashMatrix MHMatrix = new MinHashMatrix(tdMatrix, numPermutations);
     }
 
     public String[] allDocs() {
@@ -60,11 +61,6 @@ public class MinHash {
         // Populate termDocumentMatrix accordingly
     }
 
-    private void initializeMinHashMatrix() {
-        minHashMatrix = new int[numPermutations][allDocs.size()];
-        // Implement logic to create the MinHash matrix using permutations
-        // Populate minHashMatrix accordingly
-    }
 
     private int[] generateRandomPermutation(int size) {
         ArrayList<Integer> permutation = new ArrayList<>();
