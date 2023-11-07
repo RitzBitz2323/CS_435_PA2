@@ -20,7 +20,6 @@ public class MinHashMatrix {
         List<String> allDocuments = termDocumentMatrix.getDocuments();
         List<String> allTerms = termDocumentMatrix.getTerms();
         int M = allTerms.size();
-        int N = allDocuments.size();
 
         int prime = Helpers.findNextPrime(M);
 
