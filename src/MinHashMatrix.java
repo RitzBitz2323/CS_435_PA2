@@ -19,10 +19,13 @@ public class MinHashMatrix {
 
         List<String> allDocuments = termDocumentMatrix.getDocuments();
         List<String> allTerms = termDocumentMatrix.getTerms();
+        int M = allTerms.size();
+        int N = allDocuments.size();
 
-        int prime = Helpers.findNextPrime(allTerms.size());
+        int prime = Helpers.findNextPrime(M);
 
-        // TODO permutation parameters
+        this.permutation = new Permutation(numPermutations, prime);
+        this.permutation.generateRandomConstants();
 
         minHashMatrix = new int[allDocuments.size()][numPermutations];
         int[][] tdMatrix = this.termDocumentMatrix.getTermDocumentMatrix();
@@ -38,6 +41,7 @@ public class MinHashMatrix {
             for (parameterIndex = 0; parameterIndex < permutation.getParameters().size(); parameterIndex++) {
                 int minimum = Integer.MAX_VALUE;
                 IntegerPair integerPair = permutation.getParameters().get(parameterIndex);
+
                 // loop over each term in the term-document matrix
                 for (int termIndex = 0; termIndex < tdMatrix[documentIndex].length; termIndex++) {
 

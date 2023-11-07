@@ -21,21 +21,20 @@ public class TermDocumentMatrix {
     /**
      * list of all documents in matrix
      */
-    private List<String> totalDocuments = new ArrayList<String>();
+    private List<String> allDocuments = new ArrayList<>();
 
     /**
      * ordered set of all terms from documents
      */
-    private LinkedHashSet<String> totalTerms = new LinkedHashSet<>();
+    private LinkedHashSet<String> allTerms = new LinkedHashSet<>();
+
+    private HashMap<String, Integer> termMap;
 
     /**
      * Default constructor
      *
-     * @param documentName name of document
-     * @param terms        list of terms in document
      */
-    public TermDocumentMatrix(String documentName, List<String> terms) {
-        loadTerms(documentName, terms);
+    public TermDocumentMatrix() {
     }
 
     /**
@@ -44,8 +43,8 @@ public class TermDocumentMatrix {
      * @param documentName name of document
      * @param terms        list of terms in document
      */
-    public void loadTerms(String documentName, List<String> terms) {
-        HashMap<String, Integer> termMap = new HashMap<String, Integer>();
+    public void loadTermsIntoTdMatrix(String documentName, List<String> terms) {
+        this.termMap = new HashMap<String, Integer>();
 
         for (String term : terms) {
             if (termMap.containsKey(term)) {
@@ -53,11 +52,11 @@ public class TermDocumentMatrix {
             } else {
                 termMap.put(term, 1);
             }
-            this.totalTerms.add(term);
+            this.allTerms.add(term);
         }
 
         matrix.put(documentName, termMap);
-        totalDocuments.add(documentName);
+        allDocuments.add(documentName);
     }
 
     /**
@@ -68,19 +67,15 @@ public class TermDocumentMatrix {
     public int[][] getTermDocumentMatrix() {
 
         int[][] termDocumentMatrix =
-                new int[totalDocuments.size()][totalTerms.size()];
+                new int[allDocuments.size()][allTerms.size()];
 
         int documentIndex = 0;
-        for (String doc : totalDocuments) {
+        for (String doc : allDocuments) {
             HashMap<String, Integer> terms = matrix.get(doc);
             int termIndex = 0;
 
-            for (String term : totalTerms) {
-                if (terms.containsKey(term)) {
-                    termDocumentMatrix[documentIndex][termIndex] = terms.get(term);
-                } else {
-                    termDocumentMatrix[documentIndex][termIndex] = 0;
-                }
+            for (String term : allTerms) {
+                termDocumentMatrix[documentIndex][termIndex] = terms.getOrDefault(term, 0);
                 termIndex++;
             }
             documentIndex++;
@@ -92,27 +87,27 @@ public class TermDocumentMatrix {
      * Returns the number of documents in the matrix
      */
     public int numDocuments() {
-        return totalDocuments.size();
+        return allDocuments.size();
     }
 
     /**
      * Returns the number of terms in the matrix
      */
     public int numTerms() {
-        return totalTerms.size();
+        return allTerms.size();
     }
 
     /**
      * Returns the list of documents in the matrix
      */
     public List<String> getDocuments() {
-        return totalDocuments;
+        return allDocuments;
     }
 
     /**
      * Returns the list of terms in the matrix
      */
     public List<String> getTerms() {
-        return new ArrayList<>(totalTerms);
+        return new ArrayList<>(allTerms);
 }
 }
