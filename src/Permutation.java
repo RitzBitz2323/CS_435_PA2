@@ -4,7 +4,6 @@ import java.util.Random;
 
 /**
  * Permutation class
- *
  * stores parameters for computing permutations for min hashing
  */
 public class Permutation {

@@ -1,7 +1,5 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,30 +43,35 @@ public class MinHash {
      * number of terms (columns) in the term document matrix
      */
 
+    /**
+     * Constructor for MinHash class
+     * @param folder
+     * @param numPermutations
+     * @throws IOException
+     */
     public MinHash(String folder, int numPermutations) throws IOException {
         this.folder = folder;
         this.numPermutations = numPermutations;
 
-        allDocuments = new ArrayList<>();
-
-        this.tdMatrix = new TermDocumentMatrix();
         // initialize the document list and TD matrix
-        initializeTdMatrix();
+        this.tdMatrix = new TermDocumentMatrix();
+        initDocListAndTdMatrix();
 
         this.mhMatrix = new MinHashMatrix(tdMatrix, numPermutations);
+
+        this.permutationDomain = this.mhMatrix.getPermutationDomain();
+        this.allDocuments = new ArrayList<>(tdMatrix.getDocuments());
 
         this.termDocumentMatrix = tdMatrix.getTermDocumentMatrix();
         this.minHashMatrix = mhMatrix.getMinHashMatrix();
 
-        this.allDocuments = new ArrayList<>(tdMatrix.getDocuments());
-        this.permutationDomain = Helpers.findNextPrime(this.tdMatrix.numTerms());
     }
 
     /**
      * Initializes the list of documents in the folder
      * inserts them into term document matrix
      */
-    private void initializeTdMatrix() throws IOException {
+    private void initDocListAndTdMatrix() throws IOException {
         DocumentPreprocess.clearOutputFolder();
 
         File folderDir = new File(this.folder);

@@ -7,8 +7,18 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * DocumentPreprocess
+ * preprocesses the documents by removing stop words and punctuation
+ */
 public class DocumentPreprocess {
 
+    /**
+     * processes file and publishes processed version to output folder
+     *
+     * @param exact_inputFile
+     * @return
+     */
     public static String processing(String exact_inputFile){
         /**
          * Example input file string:
@@ -64,6 +74,9 @@ public class DocumentPreprocess {
         return outputFilePath;
     }
 
+    /**
+     * clears the output folder
+     */
     public static void clearOutputFolder() {
         File folder = new File("data/preprocessed_files");
         File[] files = folder.listFiles();

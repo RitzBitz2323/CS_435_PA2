@@ -1,3 +1,6 @@
+/**
+ * IntegerPair class
+ */
 public class IntegerPair {
 
     private int param1;

@@ -28,7 +28,10 @@ public class TermDocumentMatrix {
      */
     private LinkedHashSet<String> allTerms = new LinkedHashSet<>();
 
-    private HashMap<String, Integer> termMap;
+    /**
+     * map of terms in a document to their frequency
+     */
+    private HashMap<String, Integer> termFrequencyMap;
 
     /**
      * Default constructor
@@ -44,18 +47,18 @@ public class TermDocumentMatrix {
      * @param terms        list of terms in document
      */
     public void loadTermsIntoTdMatrix(String documentName, List<String> terms) {
-        this.termMap = new HashMap<String, Integer>();
+        this.termFrequencyMap = new HashMap<String, Integer>();
         System.out.printf("terms for document %s: %s", documentName, terms.toString());
         for (String term : terms) {
-            if (termMap.containsKey(term)) {
-                termMap.put(term, termMap.get(term) + 1);
+            if (termFrequencyMap.containsKey(term)) {
+                termFrequencyMap.put(term, termFrequencyMap.get(term) + 1);
             } else {
-                termMap.put(term, 1);
+                termFrequencyMap.put(term, 1);
             }
             this.allTerms.add(term);
         }
 
-        matrix.put(documentName, termMap);
+        matrix.put(documentName, termFrequencyMap);
         allDocuments.add(documentName);
     }
 

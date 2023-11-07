@@ -3,16 +3,43 @@ import jdk.jshell.execution.Util;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class represents the MinHash matrix.
+ * It is a matrix of size (number of documents) x (number of permutations).
+ * Each row represents a document and each column represents a permutation.
+ */
 public class MinHashMatrix {
 
+    /**
+     * number of permutations
+     */
     private int numPermutations;
 
+    /**
+     * TermDocumentMatrix object
+     */
     private TermDocumentMatrix termDocumentMatrix;
 
+    /**
+     * MinHashMatrix as a 2D array
+     */
     private int[][] minHashMatrix;
 
+    /**
+     * Permutation object
+     */
     private Permutation permutation;
 
+    /**
+     * permutation domain size
+     */
+    private int permutationDomain;
+
+    /**
+     *
+     * @param termDocumentMatrix
+     * @param numPermutations
+     */
     public MinHashMatrix(TermDocumentMatrix termDocumentMatrix, int numPermutations) {
         this.termDocumentMatrix = termDocumentMatrix;
         this.numPermutations = numPermutations;
@@ -31,6 +58,7 @@ public class MinHashMatrix {
 
         permutation = new Permutation(numPermutations, prime);
         permutation.generateRandomConstants();
+        this.permutationDomain = permutation.getParameters().size();
 
         int documentIndex, parameterIndex;
 
@@ -67,5 +95,9 @@ public class MinHashMatrix {
 
     public int getNumPermutations() {
         return numPermutations;
+    }
+
+    public int getPermutationDomain() {
+        return permutationDomain;
     }
 }
