@@ -48,7 +48,6 @@ public class TermDocumentMatrix {
      */
     public void loadTermsIntoTdMatrix(String documentName, List<String> terms) {
         this.termFrequencyMap = new HashMap<String, Integer>();
-        System.out.printf("terms for document %s: %s", documentName, terms.toString());
         for (String term : terms) {
             if (termFrequencyMap.containsKey(term)) {
                 termFrequencyMap.put(term, termFrequencyMap.get(term) + 1);

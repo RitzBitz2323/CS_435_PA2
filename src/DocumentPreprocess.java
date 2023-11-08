@@ -67,7 +67,6 @@ public class DocumentPreprocess {
             reader.close();
             writer.close();
 
-            System.out.println("Text preprocessing completed\nPreprocessed text saved to " + outputFilePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

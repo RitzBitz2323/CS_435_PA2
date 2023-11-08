@@ -65,6 +65,8 @@ public class MinHash {
         this.termDocumentMatrix = tdMatrix.getTermDocumentMatrix();
         this.minHashMatrix = mhMatrix.getMinHashMatrix();
 
+//        System.out.println(Arrays.deepToString(this.termDocumentMatrix));
+
     }
 
     /**
@@ -166,12 +168,12 @@ public class MinHash {
 
     public static void main(String[] args) {
         // Example usage of the MinHash class
+        DocumentPreprocess.clearOutputFolder();
         try {
             MinHash minHash = new MinHash("data/articles", 100);
-            System.out.println("All Documents: ");
             String[] documents = minHash.allDocs();
             for (String document : documents) {
-                System.out.println(document);
+                System.out.println(minHash.minHashMatrix()[0][0]);
             }
         }
         catch (IOException e) {
