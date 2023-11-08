@@ -1,71 +1,128 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class MinHash {
+    /**
+     * path to the folder containing all the documents
+     */
     private String folder;
+    /**
+     * number of permutations to be used
+     */
     private int numPermutations;
-    private ArrayList<String> allDocs;
+    /**
+     * list of all the documents in the folder
+     */
+    private ArrayList<String> allDocuments;
+    /**
+     * MinHashMatrix object
+     */
+    private MinHashMatrix mhMatrix;
+    /**
+     * TermDocumentMatrix object
+     */
+    private TermDocumentMatrix tdMatrix;
+    /**
+     * MinHashMatrix as a 2D array
+     */
     private int[][] minHashMatrix;
+    /**
+     * TermDocumentMatrix as a 2D array
+     */
     private int[][] termDocumentMatrix;
+    /**
+     * permutation domain size
+     */
     private int permutationDomain;
+    /**
+     * number of terms (columns) in the term document matrix
+     */
 
-    public MinHash(String folder, int numPermutations) {
+    /**
+     * Constructor for MinHash class
+     * @param folder
+     * @param numPermutations
+     * @throws IOException
+     */
+    public MinHash(String folder, int numPermutations) throws IOException {
         this.folder = folder;
         this.numPermutations = numPermutations;
-        allDocs = new ArrayList<>();
-        initializeDocumentList();
-        initializeTermDocumentMatrix();
-        initializeMinHashMatrix();
+
+        // initialize the document list and TD matrix
+        this.tdMatrix = new TermDocumentMatrix();
+        initDocListAndTdMatrix();
+
+        this.mhMatrix = new MinHashMatrix(tdMatrix, numPermutations);
+
+        this.permutationDomain = this.mhMatrix.getPermutationDomain();
+        this.allDocuments = new ArrayList<>(tdMatrix.getDocuments());
+
+        this.termDocumentMatrix = tdMatrix.getTermDocumentMatrix();
+        this.minHashMatrix = mhMatrix.getMinHashMatrix();
+
     }
 
-    public String[] allDocs() {
-        return allDocs.toArray(new String[0]);
-    }
+    /**
+     * Initializes the list of documents in the folder
+     * inserts them into term document matrix
+     */
+    private void initDocListAndTdMatrix() throws IOException {
+        DocumentPreprocess.clearOutputFolder();
 
-    public int[][] minHashMatrix() {
-        return minHashMatrix;
-    }
-
-    public int[][] termDocumentMatrix() {
-        return termDocumentMatrix;
-    }
-
-    public int permutationDomain() {
-        return permutationDomain;
-    }
-
-    public int numPermutations() {
-        return numPermutations;
-    }
-
-    private void initializeDocumentList() {
-        File folderDir = new File(folder);
-        File[] files = folderDir.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    allDocs.add(file.getName());
+        File folderDir = new File(this.folder);
+        File[] files;
+        if (!folderDir.exists()) {
+            System.out.println("Directory does not exist: " + folderDir.getAbsolutePath());
+        } else if (!folderDir.isDirectory()) {
+            System.out.println("This is not a directory: " + folderDir.getAbsolutePath());
+        } else {
+            files = folderDir.listFiles();
+            if (files == null) {
+                System.out.println("Failed to list files for directory: " + folderDir.getAbsolutePath());
+            } else {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        String preProcessedFileName = DocumentPreprocess.processing(file.getAbsolutePath());
+                        allDocuments.add(preProcessedFileName);
+                        this.tdMatrix.loadTermsIntoTdMatrix(preProcessedFileName, getTermsFromFile(new File(preProcessedFileName)));
+                    }
                 }
             }
         }
     }
 
-    private void initializeTermDocumentMatrix() {
-        termDocumentMatrix = new int[allDocs.size()][permutationDomain];
-        // Implement logic to create the term-document matrix from your collection of documents
-        // Populate termDocumentMatrix accordingly
+    /**
+     * Returns a list of terms from a file
+     * @param file
+     * @return `List<String>`
+     */
+    private static List<String> getTermsFromFile(File file) throws IOException {
+        ArrayList<String> terms = new ArrayList<>();
+        try {
+            Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()), StandardCharsets.ISO_8859_1);
+
+            lines.forEachOrdered(line -> {
+                String[] words = line.split(" ");
+                terms.addAll(Arrays.asList(words));
+            });
+            return terms;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException(e);
+        }
     }
 
-    private void initializeMinHashMatrix() {
-        minHashMatrix = new int[numPermutations][allDocs.size()];
-        // Implement logic to create the MinHash matrix using permutations
-        // Populate minHashMatrix accordingly
-    }
 
+    /**
+     * Generates a random permutation of integers from 0 to size
+     * @param size
+     * @return
+     */
     private int[] generateRandomPermutation(int size) {
         ArrayList<Integer> permutation = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -83,14 +140,44 @@ public class MinHash {
         return result;
     }
 
+    public String[] allDocs() {
+        return allDocuments.toArray(new String[0]);
+    }
+
+    public int[][] minHashMatrix() {
+        return this.minHashMatrix;
+    }
+
+    public int[][] termDocumentMatrix() {
+        return this.termDocumentMatrix;
+    }
+
+    /**
+     * Returns the permutation domain size\
+     * @return `int`
+     */
+    public int permutationDomain() {
+        return this.permutationDomain;
+    }
+
+    public int numPermutations() {
+        return this.numPermutations;
+    }
 
     public static void main(String[] args) {
         // Example usage of the MinHash class
-        MinHash minHash = new MinHash("CS435_PA2/CS_435_PA2/data/articles", 100);
-        System.out.println("All Documents: ");
-        String[] documents = minHash.allDocs();
-        for (String document : documents) {
-            System.out.println(document);
+        try {
+            MinHash minHash = new MinHash("data/articles", 100);
+            System.out.println("All Documents: ");
+            String[] documents = minHash.allDocs();
+            for (String document : documents) {
+                System.out.println(document);
+            }
         }
+        catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
     }
 }
