@@ -78,12 +78,14 @@ public class MinHashMatrix {
                         int hashCode = allTerms.get(termIndex).hashCode();
 
                         // (ax + b) % p, where x = hashCode
-                        int hashValue = (integerPair.getParam1() * hashCode + integerPair.getParam2()) % permutation.getPrime();
-
+                        int hashValue = permutation.computeMinHash(termIndex, parameterIndex);
                         minHashValue = Helpers.min(hashValue, minHashValue);
                     }
                 }
-                minHashMatrix[documentIndex][parameterIndex] = minHashValue;
+                if (documentIndex > 2990) {
+                    int x = 0; // for breakpoint
+                }
+                this.minHashMatrix[documentIndex][parameterIndex] = minHashValue;
             }
         }
     }
@@ -92,11 +94,20 @@ public class MinHashMatrix {
         return minHashMatrix;
     }
 
+    public int getNumDocuments() {
+        return this.termDocumentMatrix.getDocuments().size();
+    }
+
     public int getNumPermutations() {
         return numPermutations;
     }
 
+    /**
+     * Returns the length of the set of all terms occurring in D1 ∪ D2 ∪ ... ∪ Dn
+     *
+     * @return
+     */
     public int getPermutationDomain() {
-        return permutationDomain;
+        return this.termDocumentMatrix.getTerms().size();
     }
 }
