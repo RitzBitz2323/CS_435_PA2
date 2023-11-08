@@ -1,5 +1,19 @@
+import java.util.ArrayList;
+
 public class Helpers {
 
+    /**
+     * Returns the minimum of a list of integers
+     *
+     * @param num1
+     * @param num2
+     * @return int
+     */
+    public static int min(int num1, int num2) {
+        return Math.min(num1, num2);
+    }
+    
+    
     /**
      * Returns the next prime number after n
      * @param n number to start searching from

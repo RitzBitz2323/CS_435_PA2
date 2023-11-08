@@ -43,6 +43,8 @@ public class MinHash {
      * number of terms (columns) in the term document matrix
      */
 
+    private final boolean isTesting = true;
+
     /**
      * Constructor for MinHash class
      * @param folder
@@ -55,7 +57,25 @@ public class MinHash {
 
         // initialize the document list and TD matrix
         this.tdMatrix = new TermDocumentMatrix();
-        initDocListAndTdMatrix();
+
+
+        File documentFolder = new File(this.folder);
+        if (!documentFolder.exists()) {
+            System.out.println("Directory does not exist: " + documentFolder.getAbsolutePath());
+            return;
+        } else if (!documentFolder.isDirectory()) {
+            System.out.println("This is not a directory: " + documentFolder.getAbsolutePath());
+            return;
+        }
+
+        System.out.println("Pre-processing documents in folder " + documentFolder.getAbsolutePath() + "...\n");
+        List<File> files = Arrays.asList(Objects.requireNonNull(documentFolder.listFiles()));
+
+        for (File file : files) {
+            String preProcessedFileName = DocumentPreprocess.processing(file.getAbsolutePath());
+            allDocuments.add(preProcessedFileName);
+            this.tdMatrix.loadTermsIntoTdMatrix(preProcessedFileName, getTermsFromFile(new File(preProcessedFileName)));
+        }
 
         this.mhMatrix = new MinHashMatrix(tdMatrix, numPermutations);
 
@@ -65,7 +85,8 @@ public class MinHash {
         this.termDocumentMatrix = tdMatrix.getTermDocumentMatrix();
         this.minHashMatrix = mhMatrix.getMinHashMatrix();
 
-//        System.out.println(Arrays.deepToString(this.termDocumentMatrix));
+        System.out.println("MinHash matrix:");
+        System.out.println(Arrays.deepToString(this.minHashMatrix));
 
     }
 
@@ -103,20 +124,21 @@ public class MinHash {
      * @param file
      * @return `List<String>`
      */
-    private static List<String> getTermsFromFile(File file) throws IOException {
-        ArrayList<String> terms = new ArrayList<>();
-        try {
-            Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()), StandardCharsets.ISO_8859_1);
+    private static List<String> getTermsFromFile(File file) {
+        ArrayList<String> allTermsInFile = new ArrayList<>();
 
-            lines.forEachOrdered(line -> {
-                String[] words = line.split(" ");
-                terms.addAll(Arrays.asList(words));
-            });
-            return terms;
+        try {
+                Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()), StandardCharsets.ISO_8859_1);
+                lines.forEachOrdered(line -> {
+                        String[] terms = line.split("\\s+");
+                        allTermsInFile.addAll(Arrays.asList(terms));
+                });
+                lines.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException(e);
+                e.printStackTrace();
         }
+
+        return allTermsInFile;
     }
 
 

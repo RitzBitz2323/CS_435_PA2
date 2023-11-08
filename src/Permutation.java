@@ -23,28 +23,27 @@ public class Permutation {
     public Permutation(int numPermutations, int prime) {
         this.numPermutations = numPermutations;
         this.prime = prime;
-    }
-
-    public List<IntegerPair> getParameters() {
-        return parameters;
-    }
-
-    public int getPrime() {
-        return prime;
-    }
-
-    public void generateRandomConstants() {
         Random random = new Random();
 
-        while (parameters.size() < numPermutations) {
-            int param1 = random.nextInt(prime);
-            int param2 = random.nextInt(prime);
+        while (this.parameters.size() < this.numPermutations) {
+            // ensuring that the parameters are no greater than the prime
+            int param1 = random.nextInt(this.prime);
+            int param2 = random.nextInt(this.prime);
 
             IntegerPair pair = new IntegerPair(param1, param2);
 
-            if (!parameters.contains(pair)) {
-                parameters.add(pair);
+            if (!this.parameters.contains(pair)) {
+                this.parameters.add(pair);
             }
         }
     }
+
+    public List<IntegerPair> getParameters() {
+        return this.parameters;
+    }
+
+    public int getPrime() {
+        return this.prime;
+    }
+
 }

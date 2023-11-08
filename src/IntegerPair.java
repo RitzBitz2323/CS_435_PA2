@@ -30,4 +30,9 @@ public class IntegerPair {
         IntegerPair other = (IntegerPair) o;
         return param1 == other.param1 && param2 == other.param2;
     }
+
+    @Override
+    public String toString() {
+        return "IntegerPair (" + param1 + ", " + param2 + ")";
+    }
 }

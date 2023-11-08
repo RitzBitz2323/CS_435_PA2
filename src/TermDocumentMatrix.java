@@ -71,16 +71,16 @@ public class TermDocumentMatrix {
         int[][] termDocumentMatrix =
                 new int[allDocuments.size()][allTerms.size()];
 
-        int documentIndex = 0;
+        int docIndex = 0;
         for (String doc : allDocuments) {
             HashMap<String, Integer> terms = matrix.get(doc);
             int termIndex = 0;
 
             for (String term : allTerms) {
-                termDocumentMatrix[documentIndex][termIndex] = terms.getOrDefault(term, 0);
+                termDocumentMatrix[docIndex][termIndex] = terms.getOrDefault(term, 0);
                 termIndex++;
             }
-            documentIndex++;
+            docIndex++;
         }
         return termDocumentMatrix;
     }
