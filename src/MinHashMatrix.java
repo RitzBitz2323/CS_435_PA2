@@ -36,6 +36,7 @@ public class MinHashMatrix {
     private int permutationDomain;
 
     /**
+     * Constructs a MinHashMatrix object
      *
      * @param termDocumentMatrix
      * @param numPermutations
@@ -51,40 +52,40 @@ public class MinHashMatrix {
         int prime = Helpers.findNextPrime(M);
 
         this.permutation = new Permutation(numPermutations, prime);
-        this.permutation.generateRandomConstants();
 
         minHashMatrix = new int[allDocuments.size()][numPermutations];
         int[][] tdMatrix = this.termDocumentMatrix.getTermDocumentMatrix();
 
         permutation = new Permutation(numPermutations, prime);
-        permutation.generateRandomConstants();
         this.permutationDomain = permutation.getParameters().size();
 
-        int documentIndex, parameterIndex;
+        int documentIndex, parameterIndex, termIndex;
 
         // loop over each document in the term-document matrix
         for (documentIndex = 0; documentIndex < tdMatrix.length; documentIndex++) {
             // loop over each hash function h_i
             for (parameterIndex = 0; parameterIndex < permutation.getParameters().size(); parameterIndex++) {
-                int minimum = Integer.MAX_VALUE;
+                // initializing minimum hash to infinity
+                int minHashValue = Integer.MAX_VALUE;
                 IntegerPair integerPair = permutation.getParameters().get(parameterIndex);
 
                 // loop over each term in the term-document matrix
-                for (int termIndex = 0; termIndex < tdMatrix[documentIndex].length; termIndex++) {
-
+                for (termIndex = 0; termIndex < tdMatrix[documentIndex].length; termIndex++) {
+                    // frequency of this term at given document
                     int termFrequency = tdMatrix[documentIndex][termIndex];
 
                     if (termFrequency > 0) {
                         int hashCode = allTerms.get(termIndex).hashCode();
-                        int hashValue = (integerPair.getParam1() * hashCode + integerPair.getParam2()) % permutation.getPrime();
 
-                        if (hashValue < minimum) {
-                            minimum = hashValue;
-                        }
+                        // (ax + b) % p, where x = hashCode
+                        int hashValue = permutation.computeMinHash(termIndex, parameterIndex);
+                        minHashValue = Helpers.min(hashValue, minHashValue);
                     }
-
-                    minHashMatrix[documentIndex][parameterIndex] = minimum;
                 }
+                if (documentIndex > 2990) {
+                    int x = 0; // for breakpoint
+                }
+                this.minHashMatrix[documentIndex][parameterIndex] = minHashValue;
             }
         }
     }
@@ -93,11 +94,20 @@ public class MinHashMatrix {
         return minHashMatrix;
     }
 
+    public int getNumDocuments() {
+        return this.termDocumentMatrix.getDocuments().size();
+    }
+
     public int getNumPermutations() {
         return numPermutations;
     }
 
+    /**
+     * Returns the length of the set of all terms occurring in D1 ∪ D2 ∪ ... ∪ Dn
+     *
+     * @return
+     */
     public int getPermutationDomain() {
-        return permutationDomain;
+        return this.termDocumentMatrix.getTerms().size();
     }
 }

@@ -56,7 +56,7 @@ public class DocumentPreprocess {
                 String[] words = line.split("\\s+");
                 for (String word : words) {
                     // check if the word is a stop word or a short word to remove
-                    if (!stopwords.contains(word) && word.length() > 2) {
+                    if (word != null && !stopwords.contains(word) && word.length() > 2) {
                         writer.write(word + " "); 
                     }
                 }

@@ -8,7 +8,7 @@ import java.util.List;
  * describes the frequency of terms that occur in documents
  * rows correspond to terms
  * columns correspond to documents
- *
+ * <p>
  * matrix[i][j] = frequency of ith term in jth document
  */
 public class TermDocumentMatrix {
@@ -35,7 +35,6 @@ public class TermDocumentMatrix {
 
     /**
      * Default constructor
-     *
      */
     public TermDocumentMatrix() {
     }
@@ -71,32 +70,18 @@ public class TermDocumentMatrix {
         int[][] termDocumentMatrix =
                 new int[allDocuments.size()][allTerms.size()];
 
-        int documentIndex = 0;
+        int docIndex = 0;
         for (String doc : allDocuments) {
             HashMap<String, Integer> terms = matrix.get(doc);
             int termIndex = 0;
 
             for (String term : allTerms) {
-                termDocumentMatrix[documentIndex][termIndex] = terms.getOrDefault(term, 0);
+                termDocumentMatrix[docIndex][termIndex] = terms.getOrDefault(term, 0);
                 termIndex++;
             }
-            documentIndex++;
+            docIndex++;
         }
         return termDocumentMatrix;
-    }
-
-    /**
-     * Returns the number of documents in the matrix
-     */
-    public int numDocuments() {
-        return allDocuments.size();
-    }
-
-    /**
-     * Returns the number of terms in the matrix
-     */
-    public int numTerms() {
-        return allTerms.size();
     }
 
     /**
@@ -111,5 +96,5 @@ public class TermDocumentMatrix {
      */
     public List<String> getTerms() {
         return new ArrayList<>(allTerms);
-}
+    }
 }
