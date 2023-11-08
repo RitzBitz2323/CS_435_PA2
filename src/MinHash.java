@@ -18,7 +18,7 @@ public class MinHash {
     /**
      * list of all the documents in the folder
      */
-    private ArrayList<String> allDocuments;
+    private ArrayList<String> allDocuments = new ArrayList<>();
     /**
      * MinHashMatrix object
      */
