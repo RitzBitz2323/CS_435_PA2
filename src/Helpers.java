@@ -1,6 +1,29 @@
+import java.io.File;
 import java.util.ArrayList;
 
 public class Helpers {
+    /**
+     * Returns the file extension of a file
+     * @param filePath
+     * @return
+     */
+    public static String extractFileExtension(String filePath) {
+        if (filePath == null || filePath.lastIndexOf(".") == -1 || filePath.lastIndexOf(".") == 0) {
+            return ""; // Handle the situation where there is no extension
+        } else {
+            return filePath.substring(filePath.lastIndexOf("."));
+        }
+    }
+
+    public static String extractFileName(String filePath) {
+        if (filePath == null || filePath.lastIndexOf(".") == -1 || filePath.lastIndexOf(".") == 0) {
+            return ""; // Handle the situation where there is no extension
+        } else {
+            int lastSeparatorIndex = filePath.lastIndexOf(File.separator);
+            int lastPeriodIndex = filePath.lastIndexOf(".");
+            return filePath.substring(lastSeparatorIndex + 1, lastPeriodIndex);
+        }
+    }
 
     /**
      * Pretty-prints matrix

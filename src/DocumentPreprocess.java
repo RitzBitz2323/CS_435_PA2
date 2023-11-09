@@ -16,22 +16,12 @@ public class DocumentPreprocess {
     /**
      * processes file and publishes processed version to output folder
      *
-     * @param exact_inputFile
-     * @return
+     * @param absoluteFilePath String
+     * @return String
      */
-    public static String processing(String exact_inputFile){
-        /**
-         * Example input file string:
-         * String inputFilePath = "data/space/space-0.txt";
-         * Reference dp_test.java for more info on usage
-        **/
+    public static String processing(String absoluteFilePath) {
 
-        String inputFilePath = exact_inputFile;
-        // separates name of file and outputs it into new file
-        int lastSeparatorIndex = inputFilePath.lastIndexOf(File.separator);
-        int lastPeriodIndex = inputFilePath.lastIndexOf(".");
-
-        String fileName = inputFilePath.substring(lastSeparatorIndex + 1, lastPeriodIndex);
+        String fileName = Helpers.extractFileName(absoluteFilePath);
         String outputFilePath = "data/preprocessed_files/output_" + fileName + ".txt";
 
         try {
@@ -44,7 +34,7 @@ public class DocumentPreprocess {
 
             String punctuation = ".,:;'";
             // create new output file and read in file
-            BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
+            BufferedReader reader = new BufferedReader(new FileReader(absoluteFilePath));
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath));
             String line;
 

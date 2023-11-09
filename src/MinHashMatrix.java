@@ -78,7 +78,7 @@ public class MinHashMatrix {
                         int hashCode = allTerms.get(termIndex).hashCode();
 
                         // (ax + b) % p, where x = hashCode
-                        int hashValue = permutation.computeMinHash(termIndex, parameterIndex);
+                        int hashValue = permutation.computeMinHash(hashCode, parameterIndex);
                         minHashValue = Helpers.min(hashValue, minHashValue);
                     }
                 }
