@@ -61,15 +61,13 @@ public class MinHashMatrix {
 
         int documentIndex, parameterIndex, termIndex;
 
-        // loop over each document in the term-document matrix
+        // looping over each document in the term-document matrix
         for (documentIndex = 0; documentIndex < tdMatrix.length; documentIndex++) {
-            // loop over each hash function h_i
+            // looping over each hash function h_i
             for (parameterIndex = 0; parameterIndex < permutation.getParameters().size(); parameterIndex++) {
                 // initializing minimum hash to infinity
                 int minHashValue = Integer.MAX_VALUE;
-                IntegerPair integerPair = permutation.getParameters().get(parameterIndex);
-
-                // loop over each term in the term-document matrix
+                // looping over each term in the term-document matrix
                 for (termIndex = 0; termIndex < tdMatrix[documentIndex].length; termIndex++) {
                     // frequency of this term at given document
                     int termFrequency = tdMatrix[documentIndex][termIndex];
@@ -78,12 +76,9 @@ public class MinHashMatrix {
                         int hashCode = allTerms.get(termIndex).hashCode();
 
                         // (ax + b) % p, where x = hashCode
-                        int hashValue = permutation.computeMinHash(termIndex, parameterIndex);
+                        int hashValue = permutation.computeMinHash(hashCode, parameterIndex);
                         minHashValue = Helpers.min(hashValue, minHashValue);
                     }
-                }
-                if (documentIndex > 2990) {
-                    int x = 0; // for breakpoint
                 }
                 this.minHashMatrix[documentIndex][parameterIndex] = minHashValue;
             }
