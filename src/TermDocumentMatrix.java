@@ -46,7 +46,9 @@ public class TermDocumentMatrix {
      * @param terms        list of terms in document
      */
     public void loadTermsIntoTdMatrix(String documentName, List<String> terms) {
+        allDocuments.add(documentName);
         this.termFrequencyMap = new HashMap<String, Integer>();
+
         for (String term : terms) {
             if (termFrequencyMap.containsKey(term)) {
                 termFrequencyMap.put(term, termFrequencyMap.get(term) + 1);
@@ -57,7 +59,6 @@ public class TermDocumentMatrix {
         }
 
         matrix.put(documentName, termFrequencyMap);
-        allDocuments.add(documentName);
     }
 
     /**

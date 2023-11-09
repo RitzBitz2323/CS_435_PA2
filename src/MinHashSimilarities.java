@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /**
@@ -18,6 +21,8 @@ public class MinHashSimilarities {
      */
     private int[][] minHashMatrix;
 
+    private ArrayList<String> allDocuments = new ArrayList<>();
+
     /**
      * Constructs a MinHashSimilarities object
      * <p>
@@ -31,6 +36,8 @@ public class MinHashSimilarities {
 
         this.termDocumentMatrix = this.minHash.termDocumentMatrix();
         this.minHashMatrix = this.minHash.minHashMatrix();
+
+        this.allDocuments = new ArrayList<>(List.of(this.minHash.allDocs()));
     }
 
     /**
@@ -41,7 +48,7 @@ public class MinHashSimilarities {
      * @return double
      */
     public double exactJaccard(String file1, String file2) {
-        System.out.printf("Computing exact Jaccard Similarity between %s and %s...\n", file1, file2);
+       System.out.printf("Computing exact Jaccard Similarity between %s and %s...\n", file1, file2);
 
         int[] file1TermFrequencyVector = this.termFreqVector(file1);
         int[] file2TermFrequencyVector = this.termFreqVector(file2);
@@ -50,13 +57,23 @@ public class MinHashSimilarities {
         int intersection = 0;
 
         for (int i = 0; i < minHash.allTerms().length; i++) {
-            if (file1TermFrequencyVector[i] == 1 || file2TermFrequencyVector[i] == 1)
-                union++;
-            if (file1TermFrequencyVector[i] == 1 && file2TermFrequencyVector[i] == 1)
-                intersection++;
+            union += Math.max(file1TermFrequencyVector[i], file2TermFrequencyVector[i]);
+            intersection += Math.min(file1TermFrequencyVector[i], file2TermFrequencyVector[i]);
         }
 
         return (double) intersection / union;
+    }
+
+    /**
+     * Returns the TermFrequency vector of a document named fileName
+     *
+     * @param fileName String
+     * @return int[]
+     */
+    private int[] termFreqVector(String fileName) {
+        int i = this.allDocuments.indexOf(fileName);
+
+        return this.termDocumentMatrix[i];
     }
 
     /**
@@ -66,7 +83,7 @@ public class MinHashSimilarities {
      * @param file2 String
      * @return double
      */
-    private double approximateJaccard(String file1, String file2) {
+    public double approximateJaccard(String file1, String file2) {
         System.out.printf("Computing estimated Jaccard Similarity between %s and %s...\n", file1, file2);
 
         int[] file1MinHashSig = this.minHashSig(file1);
@@ -87,36 +104,28 @@ public class MinHashSimilarities {
      * @return int[]
      */
     private int[] minHashSig(String fileName) {
-        int fileIndex = IntStream.range(0, this.minHash.allDocs().length)
-                .filter(i -> ("data/preprocessed_files/output_" + fileName).equals(this.minHash.allDocs()[i]))
-                .findFirst()
-                .orElse(-1);
+        int i = this.allDocuments.indexOf(fileName);
 
-        return this.minHashMatrix[fileIndex];
+        return this.minHashMatrix[i];
     }
 
-    /**
-     * Returns the TermFrequency vector of a document named fileName
-     *
-     * @param fileName String
-     * @return int[]
-     */
-    private int[] termFreqVector(String fileName) {
-        int fileIndex = IntStream.range(0, this.minHash.allDocs().length)
-                .filter(i -> ("data/preprocessed_files/output_" + fileName).equals(this.minHash.allDocs()[i]))
-                .findFirst()
-                .orElse(-1);
-
-        return this.termDocumentMatrix[fileIndex];
+    public MinHash minHash() {
+        return this.minHash;
     }
 
     public static void main(String[] args) {
-        MinHashSimilarities minHashSimilarities = new MinHashSimilarities("data/articles", 50);
+        MinHashSimilarities minHashSimilarities = new MinHashSimilarities("data/space", 400);
         /**
          * Input the names of the files you want to compare, e.g. "baseball0.txt", "baseball1.txt"
          * The method will prepend the appropriate relative path declaration on the fly
          */
-        System.out.println(minHashSimilarities.approximateJaccard("baseball0.txt", "baseball2.txt"));
-        System.out.println(minHashSimilarities.exactJaccard("baseball0.txt", "baseball2.txt"));
+        System.out.println(minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
+        System.out.println(minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
+
+        System.out.println(minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println(minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
+
+        System.out.println(minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println(minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
     }
 }

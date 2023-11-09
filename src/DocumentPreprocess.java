@@ -67,6 +67,7 @@ public class DocumentPreprocess {
      * clears the output folder
      */
     public static void clearOutputFolder() {
+        System.out.println("Clearing output folder...");
         File folder = new File("data/preprocessed_files");
         File[] files = folder.listFiles();
         if (files == null) {

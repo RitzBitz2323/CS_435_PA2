@@ -44,6 +44,7 @@ public class MinHash {
      * @param numPermutations int
      */
     public MinHash(String folder, int numPermutations) {
+        DocumentPreprocess.clearOutputFolder();
         this.folder = folder;
         this.numPermutations = numPermutations;
 
@@ -112,30 +113,6 @@ public class MinHash {
         System.out.println("MinHash matrix generated.");
     }
 
-
-    /**
-     * Generates a random permutation of integers from 0 to size
-     *
-     * @param size
-     * @return
-     */
-    private int[] generateRandomPermutation(int size) {
-        ArrayList<Integer> permutation = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            permutation.add(i);
-        }
-        Random rand = new Random();
-        int[] result = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            int index = rand.nextInt(permutation.size());
-            result[i] = permutation.get(index);
-            permutation.remove(index);
-        }
-
-        return result;
-    }
-
     public String[] allDocs() {
         return allDocuments.toArray(new String[0]);
     }
@@ -166,16 +143,16 @@ public class MinHash {
     }
 
     public static void main(String[] args) {
-//        DocumentPreprocess.clearOutputFolder();
-//        System.out.println("Cleared Output folder (data/preprocessed_files)");
+        DocumentPreprocess.clearOutputFolder();
+        System.out.println("Cleared Output folder (data/preprocessed_files)");
         MinHash minHash = new MinHash("data/articles", 5);
         String[] documents = minHash.allDocs();
 
         Helpers.prettyPrintMatrix(
-                "Minhash matrix",
-                minHash.mhMatrix.getNumDocuments(),
-                minHash.mhMatrix.getNumPermutations(),
-                minHash.minHashMatrix()
+                "Ttermocument matrix",
+                minHash.tdMatrix.getDocuments().size(),
+                minHash.tdMatrix.getTerms().size(),
+                minHash.termDocumentMatrix()
         );
     }
 }
