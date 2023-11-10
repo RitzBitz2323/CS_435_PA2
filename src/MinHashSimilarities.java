@@ -43,12 +43,13 @@ public class MinHashSimilarities {
     /**
      * Returns the exact Jaccard similarity of two files
      * computes the Jaccard similarity of file1 and file2 using `this.termDocumentMatrix`
+     *
      * @param file1 String
      * @param file2 String
      * @return double
      */
     public double exactJaccard(String file1, String file2) {
-       System.out.printf("Computing exact Jaccard Similarity between %s and %s...\n", file1, file2);
+//        System.out.printf("Computing exact Jaccard Similarity between %s and %s...\n", file1, file2);
 
         int[] file1TermFrequencyVector = this.termFreqVector(file1);
         int[] file2TermFrequencyVector = this.termFreqVector(file2);
@@ -56,10 +57,16 @@ public class MinHashSimilarities {
         int union = 0;
         int intersection = 0;
 
-        for (int i = 0; i < minHash.allTerms().length; i++) {
+
+        long startTime = System.nanoTime();
+//        System.out.printf("Fetching union and intersection between %s and %s...\n", file1, file2);
+        int numTerms = this.minHash().numTerms();
+        for (int i = 0; i < numTerms; i++) {
             union += Math.max(file1TermFrequencyVector[i], file2TermFrequencyVector[i]);
             intersection += Math.min(file1TermFrequencyVector[i], file2TermFrequencyVector[i]);
         }
+        long endTime = System.nanoTime();
+//        System.out.printf("ACTUAL FOR-LOOP COMPLETE in %dms\n", (endTime - startTime) / 1000000);
 
         return (double) intersection / union;
     }
@@ -79,21 +86,25 @@ public class MinHashSimilarities {
     /**
      * Returns the estimated Jaccard similarity of two files
      * Compares MinHash signatures of file1 and file2 using `this.minHashMatrix`
+     *
      * @param file1 String
      * @param file2 String
      * @return double
      */
     public double approximateJaccard(String file1, String file2) {
-        System.out.printf("Computing estimated Jaccard Similarity between %s and %s...\n", file1, file2);
+//        System.out.printf("Computing estimated Jaccard Similarity between %s and %s...\n", file1, file2);
 
         int[] file1MinHashSig = this.minHashSig(file1);
         int[] file2MinHashSig = this.minHashSig(file2);
         int matchCount = 0;
 
+        long startTime = System.nanoTime();
         for (int i = 0; i < minHash.numPermutations(); i++) {
             if (file1MinHashSig[i] == file2MinHashSig[i])
                 matchCount++;
         }
+        long endTime = System.nanoTime();
+//        System.out.printf("APPROXIMATE FOR-LOOP COMPLETE in %dms\n", (endTime - startTime) / 1000000);
         return (double) matchCount / minHash.numPermutations();
     }
 
