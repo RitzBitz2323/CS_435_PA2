@@ -35,8 +35,6 @@ public class MinHash {
      * number of terms (columns) in the term document matrix
      */
 
-    private final boolean isTesting = true;
-
     /**
      * Constructor for MinHash class
      *
@@ -109,8 +107,10 @@ public class MinHash {
         System.out.printf("Pre-processed and generated Term-document matrix for %d documents.\n", this.allDocuments.size());
 
         System.out.printf("Generating MinHash matrix with %d permutations...\n", this.numPermutations);
+        long startTime = System.currentTimeMillis();
         this.mhMatrix = new MinHashMatrix(this.tdMatrix, this.numPermutations);
-        System.out.println("MinHash matrix generated.");
+        long endTime = System.currentTimeMillis();
+        System.out.printf("MinHash matrix generated in %d ms.\n", endTime - startTime);
     }
 
     public String[] allDocs() {
@@ -119,6 +119,10 @@ public class MinHash {
 
     public String[] allTerms() {
         return this.tdMatrix.getTerms().toArray(new String[0]);
+    }
+
+    public int numTerms() {
+        return this.tdMatrix.getTerms().size();
     }
 
     public int[][] minHashMatrix() {
