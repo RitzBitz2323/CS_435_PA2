@@ -29,11 +29,15 @@ Notes for grader:
 - these results may vary slightly depending on the machine’s random seeding for the permutation parameters.
 - running with a large directory like `space` may take upwards of 30 minutes to finish processing, due to the time complexity of computing the actual Jaccard similarity between documents.
 
+**Results from `MinHashAccuracy.main()`:**
 ```
+Number of bad approximations: 
 Epsilon                0.04      0.07      0.09
-400 permutations:     11464       191        12
-600 permutations:      7802        69         3
-800 permutations:      1737        38         7
+400 permutations:     16282       128         6
+600 permutations:      4386        78        10
+800 permutations:      5613        30         2
+
+Total Runtime: 823.0s
 ```
 
 We can see that as the number of permutations increases, so does the accuracy of our MinHash estimate. We also see that as the error threshold increases by even just a few percentage points, the number of misses decreases drastically.
