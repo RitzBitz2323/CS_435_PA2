@@ -2,9 +2,10 @@ Shiva Neelakantan, Ritvik Ambekar
 
 ## `DocumentPreprocess`
 
-Before constructing and analyzing our data structures, we needed to first pre-process the large text datasets. We do so via the `DocumentPreprocess` class, in which
-
-TODO
+Before constructing and analyzing our data structures, we needed to first pre-process the large text datasets. We do so via the `DocumentPreprocess` class, in which we start
+by taking in the aboslute file path for said file that wants to be pre processed, and create a outpiut file based on its name. We than instantiate the given processing parameters 
+that we need to get rid of and sort through each line, removing those parameters from the text while also satisfying other parameters given within the rubric. We than output each line into
+the new output file and once we are done pre processing, complete the file and it is than stored in our pre_processed folder.
 
 ## `MinHash`
 
