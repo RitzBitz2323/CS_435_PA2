@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 public class sd_test {
+    /**
+     * Test file for similar documents
+     * 
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         DocumentPreprocess.clearOutputFolder();
         SimilarDocuments similardoctest1 = new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 400, 0.000000000000001);

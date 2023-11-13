@@ -13,7 +13,12 @@ public class LSH {
     private int k;
     // lsh result
     private List<HashMap<Integer, List<String>>> hashTables = new ArrayList<HashMap<Integer, List<String>>>();
-
+    /**
+     * LSH Constructor
+     * @param minHashMatrix
+     * @param docNames
+     * @param b
+     */
     public LSH(int[][] minHashMatrix, String[] docNames, int b) {
         this.minHashMatrix = minHashMatrix;
         this.docNames = docNames;
@@ -25,7 +30,9 @@ public class LSH {
          }
         initializeLSH();
     }
-
+    /**
+     * Initializes LSH
+     */
     private void initializeLSH() {
             for (int i = 0; i < docNames.length; i++) {
                 for (int j = 0; j < rowsPerBand; j++) {

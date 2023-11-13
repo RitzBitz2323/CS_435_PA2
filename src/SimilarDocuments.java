@@ -5,14 +5,14 @@ import java.util.*;
 public class SimilarDocuments {
     private LSH lsh;
     private MinHash minhash; 
-    
+    // instantiate similar documents according to set parameters
     public SimilarDocuments(String nameOfFolder, int permutations, double simThreshold ){
         this.minhash = new MinHash(nameOfFolder, permutations);
        // Helpers.prettyPrintMatrix("matrix cool", this.minhash.allDocs().length, permutations, minhash.minHashMatrix());
         int rowsPerBand = (int) Math.ceil(-permutations / (Math.log(1 - Math.pow(simThreshold, 1.0 / permutations))));
         this.lsh= new LSH(minhash.minHashMatrix(), minhash.allDocs(), rowsPerBand);
     }
-
+    // calls lsh.retrieve and prints out all similar documents
     public void similaritySearch(String docName){
         ArrayList<String> resultList = lsh.retrieveSim(docName);
         System.out.println("Computing similarity search for the file " + docName);

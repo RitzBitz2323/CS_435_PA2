@@ -68,8 +68,7 @@ public class TermDocumentMatrix {
      */
     public int[][] getTermDocumentMatrix() {
 
-        int[][] termDocumentMatrix =
-                new int[allDocuments.size()][allTerms.size()];
+        int[][] termDocumentMatrix = new int[allDocuments.size()][allTerms.size()];
 
         int docIndex = 0;
         for (String doc : allDocuments) {

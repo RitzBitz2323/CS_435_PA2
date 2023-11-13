@@ -49,7 +49,8 @@ If we increase the bands, that means we reduce the number of rows ber band becau
 
 
 **Similarity Test**
- 
+ Due to some error for the LSH_Data, we could not run it on that folder so we ran it on space instead in which we got the following outputs:
+
         SimilarDocuments similardoctest1 = new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 400, 0.000000000000001);
         similardoctest1.similaritySearch("space-6.txt");
         SimilarDocuments similardoctest2= new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 1200, 0.5);
