@@ -1,15 +1,18 @@
-Shiva Neelakantan, Ritvik Ambekar
+# PA2 Report
+#### Shiva Neelakantan, Ritvik Ambekar
 
 ## `DocumentPreprocess`
 
 Before constructing and analyzing our data structures, we needed to first pre-process the large text datasets. We do so via the `DocumentPreprocess` class, in which we start
-by taking in the aboslute file path for said file that wants to be pre processed, and create a outpiut file based on its name. We than instantiate the given processing parameters 
+by taking in the absolute file path for said file that wants to be pre processed, and create a output file based on 
+its name. We than instantiate the given processing parameters 
 that we need to get rid of and sort through each line, removing those parameters from the text while also satisfying other parameters given within the rubric. We than output each line into
-the new output file and once we are done pre processing, complete the file and it is than stored in our pre_processed folder.
+the new output file and once we are done pre processing, complete the file and it is than stored in our 
+`data/preprocessed_files` folder.
 
 ## `MinHash`
 
-We break this problem into two separate classes:
+This class constructs the two matrices as dependencies: 
 
 ### `TermDocumentMatrix`
 
@@ -23,12 +26,14 @@ This class contains tthe construction of the MinHash matrix data structure, a 2-
 
 ## `MinHashAccuracy`
 
-Here are the results from one specific run `MinHashAccuracy.main()`
+Here are the results from one specific run `MinHashAccuracy.main()`.
 
 Notes for grader:
 
 - these results may vary slightly depending on the machine’s random seeding for the permutation parameters.
-- running with a large directory like `space` may take upwards of 30 minutes to finish processing, due to the time complexity of computing the actual Jaccard similarity between documents.
+- running with a large directory like `data/space` may take upwards of 15 minutes to finish processing, due to the time 
+  complexity of computing the actual Jaccard similarity between documents. This specific run took 823 seconds to 
+  terminate.
 
 **Results from `MinHashAccuracy.main()`:**
 ```
@@ -44,56 +49,128 @@ Total Runtime: 823.0s
 We can see that as the number of permutations increases, so does the accuracy of our MinHash estimate. We also see that as the error threshold increases by even just a few percentage points, the number of misses decreases drastically.
 
 
-**LSH**
+## `LSH`
 If we increase the bands, that means we reduce the number of rows ber band because bands * rowsPerBand = amount of hash functions. This means each band is more specific and narrows our results thus reducing the amount of similar documents. If we decrease the number of bands, we increase the number of rows per band and thus we consider more documents to be similar and also increasing the likelihood of more false positives. 
 
 
-**Similarity Test**
- Due to some error for the LSH_Data, we could not run it on that folder so we ran it on space instead in which we got the following outputs:
+### `SimilarDocuments`
+The LSH_Data directory was extremely large, so we ran this program on a subset of roughly 1500 files instead.
+We ran the program against ten different inputs, five with similarity threshold of 0.5 and other five with threshold 
+0.7. We noticed that as we increase the number of bands, we make the algorithm pickier about what it considers to be 
+a similar item, as each band represents a chance for the two items to be considered similar.
 
-        SimilarDocuments similardoctest1 = new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 400, 0.000000000000001);
-        similardoctest1.similaritySearch("space-6.txt");
-        SimilarDocuments similardoctest2= new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 1200, 0.5);
-        similardoctest2.similaritySearch("space-6.txt"); 
+Here are the results for the 0.5 similarity threshold:
 
-Clearing output folder...
-Pre-processing documents in folder /Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space...
-Pre-processed and generated Term-document matrix for 1001 documents.
-Generating MinHash matrix with 400 permutations...
-MinHash matrix generated in 41002 ms.
-2   161
-Computing similarity search for the file space-6.txt
----
-data/preprocessed_files/output_space-10.txt  data/preprocessed_files/output_space-516.txt  data/preprocessed_files/output_space-651.txt  data/preprocessed_files/output_space-15.txt  data/preprocessed_files/output_space-6.txt  Clearing output folder...
-Pre-processing documents in folder /Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space...
-Pre-processed and generated Term-document matrix for 1001 documents.
-Generating MinHash matrix with 1200 permutations...
-MinHash matrix generated in 114624 ms.
-7   161
-Computing similarity search for the file space-6.txt
----
-data/preprocessed_files/output_space-6.txt  2   161
-Computing similarity search for the file space-983.txt
----
-data/preprocessed_files/output_space-203.txt  data/preprocessed_files/output_space-144.txt  data/preprocessed_files/output_space-863.txt  data/preprocessed_files/output_space-983.txt  data/preprocessed_files/output_space-81.txt  data/preprocessed_files/output_space-956.txt  data/preprocessed_files/output_space-178.txt  data/preprocessed_files/output_space-688.txt  data/preprocessed_files/output_space-965.txt  data/preprocessed_files/output_space-859.txt  data/preprocessed_files/output_space-497.txt  2   161
-Computing similarity search for the file space-958.txt
----
-data/preprocessed_files/output_space-175.txt  data/preprocessed_files/output_space-972.txt  data/preprocessed_files/output_space-204.txt  data/preprocessed_files/output_space-39.txt  data/preprocessed_files/output_space-472.txt  data/preprocessed_files/output_space-111.txt  data/preprocessed_files/output_space-543.txt  data/preprocessed_files/output_space-18.txt  data/preprocessed_files/output_space-158.txt  data/preprocessed_files/output_space-238.txt  data/preprocessed_files/output_space-78.txt  data/preprocessed_files/output_space-485.txt  data/preprocessed_files/output_space-348.txt  data/preprocessed_files/output_space-437.txt  data/preprocessed_files/output_space-259.txt  data/preprocessed_files/output_space-838.txt  data/preprocessed_files/output_space-517.txt  data/preprocessed_files/output_space-878.txt  data/preprocessed_files/output_space-780.txt  data/preprocessed_files/output_space-62.txt  data/preprocessed_files/output_space-512.txt  data/preprocessed_files/output_space-564.txt  data/preprocessed_files/output_space-88.txt  data/preprocessed_files/output_space-181.txt  data/preprocessed_files/output_space-355.txt  data/preprocessed_files/output_space-83.txt  data/preprocessed_files/output_space-767.txt  data/preprocessed_files/output_space-715.txt  data/preprocessed_files/output_space-958.txt  data/preprocessed_files/output_space-877.txt  data/preprocessed_files/output_space-228.txt  data/preprocessed_files/output_space-621.txt  data/preprocessed_files/output_space-394.txt  data/preprocessed_files/output_space-453.txt  data/preprocessed_files/output_space-165.txt  data/preprocessed_files/output_space-422.txt  data/preprocessed_files/output_space-143.txt  data/preprocessed_files/output_space-470.txt  data/preprocessed_files/output_space-550.txt  data/preprocessed_files/output_space-922.txt  data/preprocessed_files/output_space-198.txt  data/preprocessed_files/output_space-663.txt  data/preprocessed_files/output_space-477.txt  data/preprocessed_files/output_space-86.txt  data/preprocessed_files/output_space-34.txt  2   161
-Computing similarity search for the file space-803.txt
----
-data/preprocessed_files/output_space-798.txt  data/preprocessed_files/output_space-803.txt  2   161
-Computing similarity search for the file space-763.txt
----
-data/preprocessed_files/output_space-763.txt  7   161
-Computing similarity search for the file space-861.txt
----
-data/preprocessed_files/output_space-861.txt  7   161
-Computing similarity search for the file space-761.txt
----
-data/preprocessed_files/output_space-761.txt  7   161
-Computing similarity search for the file space-709.txt
----
-data/preprocessed_files/output_space-709.txt  7   161
-Computing similarity search for the file space-300.txt
----
-data/preprocessed_files/output_space-300.txt  %             
+```
+The following documents have similarity >= 0.50 with space-999.txt:
+	data/preprocessed_files/output_space-999.txt.copy6
+	data/preprocessed_files/output_space-999.txt.copy7
+	data/preprocessed_files/output_space-999.txt
+	data/preprocessed_files/output_space-999.txt.copy1
+	data/preprocessed_files/output_space-999.txt.copy2
+	data/preprocessed_files/output_space-999.txt.copy3
+	data/preprocessed_files/output_space-999.txt.copy4
+	data/preprocessed_files/output_space-999.txt.copy5
+
+
+The following documents have similarity >= 0.50 with space-998.txt:
+	data/preprocessed_files/output_space-998.txt.copy3
+	data/preprocessed_files/output_space-998.txt.copy4
+	data/preprocessed_files/output_space-998.txt.copy5
+	data/preprocessed_files/output_space-998.txt.copy6
+	data/preprocessed_files/output_space-998.txt
+	data/preprocessed_files/output_space-998.txt.copy1
+	data/preprocessed_files/output_space-998.txt.copy2
+	data/preprocessed_files/output_space-998.txt.copy7
+
+
+The following documents have similarity >= 0.50 with space-997.txt:
+	data/preprocessed_files/output_space-997.txt
+	data/preprocessed_files/output_space-997.txt.copy7
+	data/preprocessed_files/output_space-997.txt.copy6
+	data/preprocessed_files/output_space-997.txt.copy5
+	data/preprocessed_files/output_space-997.txt.copy4
+	data/preprocessed_files/output_space-997.txt.copy3
+	data/preprocessed_files/output_space-997.txt.copy2
+	data/preprocessed_files/output_space-997.txt.copy1
+
+
+The following documents have similarity >= 0.50 with space-996.txt:
+	data/preprocessed_files/output_space-996.txt
+	data/preprocessed_files/output_space-996.txt.copy3
+	data/preprocessed_files/output_space-996.txt.copy4
+	data/preprocessed_files/output_space-996.txt.copy1
+	data/preprocessed_files/output_space-996.txt.copy2
+	data/preprocessed_files/output_space-996.txt.copy7
+	data/preprocessed_files/output_space-996.txt.copy5
+	data/preprocessed_files/output_space-996.txt.copy6
+
+
+The following documents have similarity >= 0.50 with space-995.txt:
+	data/preprocessed_files/output_space-995.txt.copy6
+	data/preprocessed_files/output_space-995.txt.copy7
+	data/preprocessed_files/output_space-995.txt.copy4
+	data/preprocessed_files/output_space-995.txt.copy5
+	data/preprocessed_files/output_space-995.txt.copy2
+	data/preprocessed_files/output_space-995.txt
+	data/preprocessed_files/output_space-995.txt.copy3
+	data/preprocessed_files/output_space-995.txt.copy1
+```
+
+Here are the results for the 0.7 similarity threshold:
+```
+The following documents have similarity >= 0.70 with space-989.txt:
+	data/preprocessed_files/output_space-989.txt.copy4
+	data/preprocessed_files/output_space-989.txt.copy3
+	data/preprocessed_files/output_space-989.txt.copy2
+	data/preprocessed_files/output_space-989.txt.copy1
+	data/preprocessed_files/output_space-989.txt
+	data/preprocessed_files/output_space-989.txt.copy7
+	data/preprocessed_files/output_space-989.txt.copy6
+	data/preprocessed_files/output_space-989.txt.copy5
+
+
+The following documents have similarity >= 0.70 with space-988.txt:
+	data/preprocessed_files/output_space-988.txt.copy1
+	data/preprocessed_files/output_space-988.txt.copy4
+	data/preprocessed_files/output_space-988.txt.copy5
+	data/preprocessed_files/output_space-988.txt.copy2
+	data/preprocessed_files/output_space-988.txt.copy3
+	data/preprocessed_files/output_space-988.txt
+	data/preprocessed_files/output_space-988.txt.copy6
+	data/preprocessed_files/output_space-988.txt.copy7
+
+
+The following documents have similarity >= 0.70 with space-987.txt:
+	data/preprocessed_files/output_space-987.txt.copy7
+	data/preprocessed_files/output_space-987.txt.copy4
+	data/preprocessed_files/output_space-987.txt.copy3
+	data/preprocessed_files/output_space-987.txt.copy6
+	data/preprocessed_files/output_space-987.txt
+	data/preprocessed_files/output_space-987.txt.copy5
+	data/preprocessed_files/output_space-987.txt.copy2
+	data/preprocessed_files/output_space-987.txt.copy1
+
+
+The following documents have similarity >= 0.70 with space-986.txt:
+	data/preprocessed_files/output_space-986.txt.copy1
+	data/preprocessed_files/output_space-986.txt.copy3
+	data/preprocessed_files/output_space-986.txt.copy2
+	data/preprocessed_files/output_space-986.txt.copy5
+	data/preprocessed_files/output_space-986.txt
+	data/preprocessed_files/output_space-986.txt.copy4
+	data/preprocessed_files/output_space-986.txt.copy7
+	data/preprocessed_files/output_space-986.txt.copy6
+
+
+The following documents have similarity >= 0.70 with space-985.txt:
+	data/preprocessed_files/output_space-985.txt.copy5
+	data/preprocessed_files/output_space-985.txt.copy6
+	data/preprocessed_files/output_space-985.txt.copy7
+	data/preprocessed_files/output_space-985.txt
+	data/preprocessed_files/output_space-985.txt.copy1
+	data/preprocessed_files/output_space-985.txt.copy2
+	data/preprocessed_files/output_space-985.txt.copy3
+	data/preprocessed_files/output_space-985.txt.copy4
+
+```

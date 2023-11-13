@@ -127,16 +127,15 @@ public class MinHashSimilarities {
     public static void main(String[] args) {
         MinHashSimilarities minHashSimilarities = new MinHashSimilarities("data/space", 400);
         /**
-         * Input the names of the files you want to compare, e.g. "baseball0.txt", "baseball1.txt"
-         * The method will prepend the appropriate relative path declaration on the fly
+         * Input the names of the files you want to compare from root, e.g. "data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"
          */
-        System.out.println(minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
-        System.out.println(minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
-
-        System.out.println(minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
-        System.out.println(minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
-
-        System.out.println(minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
-        System.out.println(minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
+        System.out.println();
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println();
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
     }
 }

@@ -22,7 +22,10 @@ public class DocumentPreprocess {
     public static String processing(String absoluteFilePath) {
 
         String fileName = Helpers.extractFileName(absoluteFilePath);
-        String outputFilePath = "data/preprocessed_files/output_" + fileName + ".txt";
+        String outputFilePath;
+        if (Helpers.extractFileExtension(absoluteFilePath).contains("copy"))
+            outputFilePath = "data/preprocessed_files/output_" + fileName + Helpers.extractFileExtension(absoluteFilePath);
+        else outputFilePath = "data/preprocessed_files/output_" + fileName + ".txt";
 
         try {
             // pre defined words to remove as well as punctuation to remove
