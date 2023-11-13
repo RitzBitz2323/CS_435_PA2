@@ -20,15 +20,15 @@ public class LSH {
         this.b = b;
         this.k= minHashMatrix[0].length;
         this.rowsPerBand = k / b;
-
+         for (int g = 0; g < b; g++) {
+            hashTables.add(new HashMap<Integer, List<String>>());
+         }
         initializeLSH();
     }
 
     private void initializeLSH() {
-        for (int g = 0; g < b; g++) {
-            hashTables.add(new HashMap<Integer, List<String>>());
             for (int i = 0; i < docNames.length; i++) {
-                for (int j = 0; j < b; j++) {
+                for (int j = 0; j < rowsPerBand; j++) {
                     HashMap<Integer, List<String>> tempTable = hashTables.get(j);
                     int hashValue = Arrays.hashCode(Arrays.copyOfRange(minHashMatrix[i], rowsPerBand * j, rowsPerBand * j + rowsPerBand));
 
@@ -39,24 +39,27 @@ public class LSH {
                 tempTable.get(hashValue).add(docNames[i]);
                 }
             }
-        }
     }
     //finds duplicates of a given document
-    public ArrayList<String> retrieveSim (String docName) {
-        int docIndex = Arrays.asList(docNames).indexOf(docName);
-        Set<String> temp = new HashSet<String>();
-        // do lsh in order to get similar documents
-        for (int i = 0; i < b; i++) {
-        HashMap<Integer, List<String>> tempMap = hashTables.get(i);
-        int hashValue =Arrays.hashCode(Arrays.copyOfRange(minHashMatrix[docIndex], rowsPerBand * i, rowsPerBand * i + rowsPerBand));
-        List<String> similarDocs = tempMap.get(hashValue);
-            for (String doc : similarDocs) {
-                temp.add(doc);
+   public ArrayList<String> retrieveSim(String docName) {
+    String outputFilePath = "data/preprocessed_files/output_" + docName;
+    int docIndex = Arrays.asList(docNames).indexOf(outputFilePath);
+    if (docIndex == -1) {
+        throw new IllegalArgumentException("Document name not found: " + docName);
+    }
+    Set<String> temp = new HashSet<>();
+    System.out.println(""+rowsPerBand + "   " + b );
+    for (int i = 0; i < rowsPerBand; i++) {
+            HashMap<Integer, List<String>> tempMap = hashTables.get(i);
+            int hashValue = Arrays.hashCode(Arrays.copyOfRange(minHashMatrix[docIndex], rowsPerBand * i, rowsPerBand * i + rowsPerBand));
+            List<String> similarDocs = tempMap.get(hashValue);
+            for(String d : similarDocs){
+                temp.add(d);
             }
-        }
-        temp.remove(docName);
-        ArrayList<String> nearDups = new ArrayList<String>();
-        nearDups.addAll(temp);
-        return nearDups;
-  }
+    }
+
+    temp.remove(docName);
+    return new ArrayList<>(temp);
 }
+}
+

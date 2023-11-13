@@ -42,3 +42,57 @@ Total Runtime: 823.0s
 ```
 
 We can see that as the number of permutations increases, so does the accuracy of our MinHash estimate. We also see that as the error threshold increases by even just a few percentage points, the number of misses decreases drastically.
+
+
+**LSH**
+If we increase the bands, that means we reduce the number of rows ber band because bands * rowsPerBand = amount of hash functions. This means each band is more specific and narrows our results thus reducing the amount of similar documents. If we decrease the number of bands, we increase the number of rows per band and thus we consider more documents to be similar and also increasing the likelihood of more false positives. 
+
+
+**Similarity Test**
+ 
+        SimilarDocuments similardoctest1 = new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 400, 0.000000000000001);
+        similardoctest1.similaritySearch("space-6.txt");
+        SimilarDocuments similardoctest2= new SimilarDocuments("/Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space/", 1200, 0.5);
+        similardoctest2.similaritySearch("space-6.txt"); 
+
+Clearing output folder...
+Pre-processing documents in folder /Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space...
+Pre-processed and generated Term-document matrix for 1001 documents.
+Generating MinHash matrix with 400 permutations...
+MinHash matrix generated in 41002 ms.
+2   161
+Computing similarity search for the file space-6.txt
+---
+data/preprocessed_files/output_space-10.txt  data/preprocessed_files/output_space-516.txt  data/preprocessed_files/output_space-651.txt  data/preprocessed_files/output_space-15.txt  data/preprocessed_files/output_space-6.txt  Clearing output folder...
+Pre-processing documents in folder /Users/rambekar/CS_435/CS435_PA2/CS_435_PA2/data/space...
+Pre-processed and generated Term-document matrix for 1001 documents.
+Generating MinHash matrix with 1200 permutations...
+MinHash matrix generated in 114624 ms.
+7   161
+Computing similarity search for the file space-6.txt
+---
+data/preprocessed_files/output_space-6.txt  2   161
+Computing similarity search for the file space-983.txt
+---
+data/preprocessed_files/output_space-203.txt  data/preprocessed_files/output_space-144.txt  data/preprocessed_files/output_space-863.txt  data/preprocessed_files/output_space-983.txt  data/preprocessed_files/output_space-81.txt  data/preprocessed_files/output_space-956.txt  data/preprocessed_files/output_space-178.txt  data/preprocessed_files/output_space-688.txt  data/preprocessed_files/output_space-965.txt  data/preprocessed_files/output_space-859.txt  data/preprocessed_files/output_space-497.txt  2   161
+Computing similarity search for the file space-958.txt
+---
+data/preprocessed_files/output_space-175.txt  data/preprocessed_files/output_space-972.txt  data/preprocessed_files/output_space-204.txt  data/preprocessed_files/output_space-39.txt  data/preprocessed_files/output_space-472.txt  data/preprocessed_files/output_space-111.txt  data/preprocessed_files/output_space-543.txt  data/preprocessed_files/output_space-18.txt  data/preprocessed_files/output_space-158.txt  data/preprocessed_files/output_space-238.txt  data/preprocessed_files/output_space-78.txt  data/preprocessed_files/output_space-485.txt  data/preprocessed_files/output_space-348.txt  data/preprocessed_files/output_space-437.txt  data/preprocessed_files/output_space-259.txt  data/preprocessed_files/output_space-838.txt  data/preprocessed_files/output_space-517.txt  data/preprocessed_files/output_space-878.txt  data/preprocessed_files/output_space-780.txt  data/preprocessed_files/output_space-62.txt  data/preprocessed_files/output_space-512.txt  data/preprocessed_files/output_space-564.txt  data/preprocessed_files/output_space-88.txt  data/preprocessed_files/output_space-181.txt  data/preprocessed_files/output_space-355.txt  data/preprocessed_files/output_space-83.txt  data/preprocessed_files/output_space-767.txt  data/preprocessed_files/output_space-715.txt  data/preprocessed_files/output_space-958.txt  data/preprocessed_files/output_space-877.txt  data/preprocessed_files/output_space-228.txt  data/preprocessed_files/output_space-621.txt  data/preprocessed_files/output_space-394.txt  data/preprocessed_files/output_space-453.txt  data/preprocessed_files/output_space-165.txt  data/preprocessed_files/output_space-422.txt  data/preprocessed_files/output_space-143.txt  data/preprocessed_files/output_space-470.txt  data/preprocessed_files/output_space-550.txt  data/preprocessed_files/output_space-922.txt  data/preprocessed_files/output_space-198.txt  data/preprocessed_files/output_space-663.txt  data/preprocessed_files/output_space-477.txt  data/preprocessed_files/output_space-86.txt  data/preprocessed_files/output_space-34.txt  2   161
+Computing similarity search for the file space-803.txt
+---
+data/preprocessed_files/output_space-798.txt  data/preprocessed_files/output_space-803.txt  2   161
+Computing similarity search for the file space-763.txt
+---
+data/preprocessed_files/output_space-763.txt  7   161
+Computing similarity search for the file space-861.txt
+---
+data/preprocessed_files/output_space-861.txt  7   161
+Computing similarity search for the file space-761.txt
+---
+data/preprocessed_files/output_space-761.txt  7   161
+Computing similarity search for the file space-709.txt
+---
+data/preprocessed_files/output_space-709.txt  7   161
+Computing similarity search for the file space-300.txt
+---
+data/preprocessed_files/output_space-300.txt  %             

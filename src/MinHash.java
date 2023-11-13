@@ -98,6 +98,15 @@ public class MinHash {
             if (file.isDirectory() || file.getName().equals(".DS_Store")) {
                 continue;
             }
+            String[] excludedExtensions = {".txt.copy", ".txt.copy1", ".txt.copy2", ".txt.copy3", ".txt.copy4", ".txt.copy5", ".txt.copy6", ".txt.copy7"};
+            String fileExtension = getFileExtension(file.getAbsolutePath());
+    
+            // check if  extension is in  list of excluded extensions
+            for (String excludedExtension : excludedExtensions) {
+                if (excludedExtension.equals(fileExtension)) {
+                    break;
+                }
+            }
             String preProcessedFileName = DocumentPreprocess.processing(file.getAbsolutePath());
             this.allDocuments.add(preProcessedFileName);
             assert preProcessedFileName != null;
@@ -158,5 +167,18 @@ public class MinHash {
                 minHash.tdMatrix.getTerms().size(),
                 minHash.termDocumentMatrix()
         );
+    }
+
+    /**
+     * Returns final file extension
+     * @param filename
+     * @return
+     */
+    public static String getFileExtension(String filename) {
+        int lastDotIndex = filename.lastIndexOf(".");
+        if (lastDotIndex == -1) {
+            return "";
+        }
+        return filename.substring(lastDotIndex);
     }
 }
