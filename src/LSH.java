@@ -50,9 +50,9 @@ public class LSH {
         HashMap<Integer, List<String>> tempMap = hashTables.get(i);
         int hashValue =Arrays.hashCode(Arrays.copyOfRange(minHashMatrix[docIndex], rowsPerBand * i, rowsPerBand * i + rowsPerBand));
         List<String> similarDocs = tempMap.get(hashValue);
-        for (String doc : similarDocs) {
-            temp.add(doc);
-        }
+            for (String doc : similarDocs) {
+                temp.add(doc);
+            }
         }
         temp.remove(docName);
         ArrayList<String> nearDups = new ArrayList<String>();
