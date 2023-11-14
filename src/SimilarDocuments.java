@@ -25,7 +25,7 @@ public class SimilarDocuments {
     }
 
     // calls lsh.retrieve and prints out all similar documents
-    public void similaritySearch(String docName) {
+    public ArrayList<String> similaritySearch(String docName) {
         ArrayList<String> resultList = lsh.retrieveSim(docName);
         System.out.printf("The following documents have similarity >= %.2f with %s:\n", this.similarityThreshold, docName);
         for (String s : resultList) {
@@ -33,6 +33,7 @@ public class SimilarDocuments {
         }
         System.out.println();
         System.out.println();
+        return resultList;
     }
 
     public static void main(String[] args) {
