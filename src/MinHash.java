@@ -38,11 +38,10 @@ public class MinHash {
     /**
      * Constructor for MinHash class
      *
-     * @param folder String
+     * @param folder String absolute path to folder
      * @param numPermutations int
      */
     public MinHash(String folder, int numPermutations) {
-        DocumentPreprocess.clearOutputFolder();
         this.folder = folder;
         this.numPermutations = numPermutations;
 
@@ -67,8 +66,21 @@ public class MinHash {
         try {
             Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()), StandardCharsets.ISO_8859_1);
             lines.forEachOrdered(line -> {
+                String punctuation = ".,:;'";
+                line = line.toLowerCase();
+                line = line.replaceAll("[" + punctuation + "]", "");
+                Set<String> stopwords = new HashSet<>();
+                stopwords.add("the");
+                stopwords.add("are");
+                stopwords.add("The");
+                stopwords.add("Are");
+
                 String[] terms = line.split("\\s+");
-                allTermsInFile.addAll(Arrays.asList(terms));
+
+                for (String term : terms) {
+                    if (term != null && !stopwords.contains(term) && term.length() > 2)
+                        allTermsInFile.add(term.toLowerCase());
+                }
             });
             lines.close();
         } catch (IOException e) {
@@ -98,19 +110,9 @@ public class MinHash {
             if (file.isDirectory() || file.getName().equals(".DS_Store")) {
                 continue;
             }
-            String[] excludedExtensions = {".txt.copy", ".txt.copy1", ".txt.copy2", ".txt.copy3", ".txt.copy4", ".txt.copy5", ".txt.copy6", ".txt.copy7"};
-            String fileExtension = getFileExtension(file.getAbsolutePath());
-    
-            // check if  extension is in  list of excluded extensions
-            for (String excludedExtension : excludedExtensions) {
-                if (excludedExtension.equals(fileExtension)) {
-                    break;
-                }
-            }
-            String preProcessedFileName = DocumentPreprocess.processing(file.getAbsolutePath());
-            this.allDocuments.add(preProcessedFileName);
-            assert preProcessedFileName != null;
-            this.tdMatrix.loadTermsIntoTdMatrix(preProcessedFileName, getTermsFromFile(new File(preProcessedFileName)));
+
+            this.allDocuments.add(file.getAbsolutePath());
+            this.tdMatrix.loadTermsIntoTdMatrix(file.getAbsolutePath(), getTermsFromFile(file));
         }
 
         System.out.printf("Pre-processed and generated Term-document matrix for %d documents.\n", this.allDocuments.size());
@@ -143,7 +145,7 @@ public class MinHash {
     }
 
     /**
-     * Returns the permutation domain size\
+     * Returns the permutation domain size
      *
      * @return `int`
      */
@@ -156,29 +158,13 @@ public class MinHash {
     }
 
     public static void main(String[] args) {
-        DocumentPreprocess.clearOutputFolder();
-        System.out.println("Cleared Output folder (data/preprocessed_files)");
-        MinHash minHash = new MinHash("data/articles", 5);
-        String[] documents = minHash.allDocs();
+        MinHash minHash = new MinHash("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles", 5);
 
         Helpers.prettyPrintMatrix(
-                "Ttermocument matrix",
-                minHash.tdMatrix.getDocuments().size(),
-                minHash.tdMatrix.getTerms().size(),
-                minHash.termDocumentMatrix()
+                "Minhash matrix",
+                minHash.allDocs().length,
+                minHash.numPermutations,
+                minHash.minHashMatrix()
         );
-    }
-
-    /**
-     * Returns final file extension
-     * @param filename
-     * @return
-     */
-    public static String getFileExtension(String filename) {
-        int lastDotIndex = filename.lastIndexOf(".");
-        if (lastDotIndex == -1) {
-            return "";
-        }
-        return filename.substring(lastDotIndex);
     }
 }

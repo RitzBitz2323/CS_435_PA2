@@ -79,7 +79,9 @@ public class MinHashSimilarities {
      */
     private int[] termFreqVector(String fileName) {
         int i = this.allDocuments.indexOf(fileName);
-
+        if (i == -1) {
+            System.err.println("Document name not found: " + fileName);
+        }
         return this.termDocumentMatrix[i];
     }
 
@@ -116,7 +118,9 @@ public class MinHashSimilarities {
      */
     private int[] minHashSig(String fileName) {
         int i = this.allDocuments.indexOf(fileName);
-
+        if (i == -1) {
+            System.err.println("Document name not found: " + fileName);
+        }
         return this.minHashMatrix[i];
     }
 
@@ -125,17 +129,13 @@ public class MinHashSimilarities {
     }
 
     public static void main(String[] args) {
-        MinHashSimilarities minHashSimilarities = new MinHashSimilarities("data/space", 400);
-        /**
-         * Input the names of the files you want to compare from root, e.g. "data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"
-         */
-        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
-        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-1.txt"));
+        MinHashSimilarities minHashSimilarities = new MinHashSimilarities("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space", 500);
+
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-1.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-1.txt"));
         System.out.println();
-        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
-        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-0.txt", "data/preprocessed_files/output_space-2.txt"));
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-2.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-2.txt"));
         System.out.println();
-        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
-        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("data/preprocessed_files/output_space-1.txt", "data/preprocessed_files/output_space-2.txt"));
     }
 }

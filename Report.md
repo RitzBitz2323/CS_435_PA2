@@ -1,22 +1,17 @@
 # PA2 Report
 #### Shiva Neelakantan, Ritvik Ambekar
 
-## `DocumentPreprocess`
-
-Before constructing and analyzing our data structures, we needed to first pre-process the large text datasets. We do so via the `DocumentPreprocess` class, in which we start
-by taking in the absolute file path for said file that wants to be pre processed, and create a output file based on 
-its name. We than instantiate the given processing parameters 
-that we need to get rid of and sort through each line, removing those parameters from the text while also satisfying other parameters given within the rubric. We than output each line into
-the new output file and once we are done pre processing, complete the file and it is than stored in our 
-`data/preprocessed_files` folder.
-
 ## `MinHash`
 
 This class constructs the two matrices as dependencies: 
 
 ### `TermDocumentMatrix`
 
-This class contains the construction of the sparse 2-dimensional matrix of documents and terms. After running the documents through `DocumentPreprocess.processing()`, we iterate over each term in each document, and then **we store the frequency of each term in its specific Hashmap mapping the term to its frequency for each document.** We use this hashmap to then construct the term-document matrix data structure, which is effectively an array of term-frequency vectors. Refer to the `TermDocumentMatrix` class.
+This class contains the construction of the sparse 2-dimensional matrix of documents and terms. 
+After conditionally adding only the acceptable terms within `getTermsFromFile()` via iterating over each term in the 
+document line by line,
+**we store the frequency of each term in its specific Hashmap mapping the term to its frequency for each document.** 
+We use this hashmap to then construct the term-document matrix data structure, which is effectively an array of term-frequency vectors. Refer to the `TermDocumentMatrix` class.
 
 ### `MinHashMatrix`
 
@@ -31,7 +26,7 @@ Here are the results from one specific run `MinHashAccuracy.main()`.
 Notes for grader:
 
 - these results may vary slightly depending on the machine’s random seeding for the permutation parameters.
-- running with a large directory like `data/space` may take upwards of 15 minutes to finish processing, due to the time 
+- running with a large directory like `space` may take upwards of 15 minutes to finish processing, due to the time 
   complexity of computing the actual Jaccard similarity between documents. This specific run took 823 seconds to 
   terminate.
 
@@ -62,115 +57,101 @@ a similar item, as each band represents a chance for the two items to be conside
 Here are the results for the 0.5 similarity threshold:
 
 ```
-The following documents have similarity >= 0.50 with space-999.txt:
-	data/preprocessed_files/output_space-999.txt.copy6
-	data/preprocessed_files/output_space-999.txt.copy7
-	data/preprocessed_files/output_space-999.txt
-	data/preprocessed_files/output_space-999.txt.copy1
-	data/preprocessed_files/output_space-999.txt.copy2
-	data/preprocessed_files/output_space-999.txt.copy3
-	data/preprocessed_files/output_space-999.txt.copy4
-	data/preprocessed_files/output_space-999.txt.copy5
+The following documents have similarity >= 0.50 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-9.txt.copy1:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-9.txt
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-9.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-9.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-9.txt.copy4
 
 
-The following documents have similarity >= 0.50 with space-998.txt:
-	data/preprocessed_files/output_space-998.txt.copy3
-	data/preprocessed_files/output_space-998.txt.copy4
-	data/preprocessed_files/output_space-998.txt.copy5
-	data/preprocessed_files/output_space-998.txt.copy6
-	data/preprocessed_files/output_space-998.txt
-	data/preprocessed_files/output_space-998.txt.copy1
-	data/preprocessed_files/output_space-998.txt.copy2
-	data/preprocessed_files/output_space-998.txt.copy7
+The following documents have similarity >= 0.50 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt.copy1
 
 
-The following documents have similarity >= 0.50 with space-997.txt:
-	data/preprocessed_files/output_space-997.txt
-	data/preprocessed_files/output_space-997.txt.copy7
-	data/preprocessed_files/output_space-997.txt.copy6
-	data/preprocessed_files/output_space-997.txt.copy5
-	data/preprocessed_files/output_space-997.txt.copy4
-	data/preprocessed_files/output_space-997.txt.copy3
-	data/preprocessed_files/output_space-997.txt.copy2
-	data/preprocessed_files/output_space-997.txt.copy1
+The following documents have similarity >= 0.50 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt.copy3
 
 
-The following documents have similarity >= 0.50 with space-996.txt:
-	data/preprocessed_files/output_space-996.txt
-	data/preprocessed_files/output_space-996.txt.copy3
-	data/preprocessed_files/output_space-996.txt.copy4
-	data/preprocessed_files/output_space-996.txt.copy1
-	data/preprocessed_files/output_space-996.txt.copy2
-	data/preprocessed_files/output_space-996.txt.copy7
-	data/preprocessed_files/output_space-996.txt.copy5
-	data/preprocessed_files/output_space-996.txt.copy6
+The following documents have similarity >= 0.50 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt.copy7
 
 
-The following documents have similarity >= 0.50 with space-995.txt:
-	data/preprocessed_files/output_space-995.txt.copy6
-	data/preprocessed_files/output_space-995.txt.copy7
-	data/preprocessed_files/output_space-995.txt.copy4
-	data/preprocessed_files/output_space-995.txt.copy5
-	data/preprocessed_files/output_space-995.txt.copy2
-	data/preprocessed_files/output_space-995.txt
-	data/preprocessed_files/output_space-995.txt.copy3
-	data/preprocessed_files/output_space-995.txt.copy1
+The following documents have similarity >= 0.50 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt.copy7
 ```
 
 Here are the results for the 0.7 similarity threshold:
 ```
-The following documents have similarity >= 0.70 with space-989.txt:
-	data/preprocessed_files/output_space-989.txt.copy4
-	data/preprocessed_files/output_space-989.txt.copy3
-	data/preprocessed_files/output_space-989.txt.copy2
-	data/preprocessed_files/output_space-989.txt.copy1
-	data/preprocessed_files/output_space-989.txt
-	data/preprocessed_files/output_space-989.txt.copy7
-	data/preprocessed_files/output_space-989.txt.copy6
-	data/preprocessed_files/output_space-989.txt.copy5
+The following documents have similarity >= 0.70 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt.copy1
 
 
-The following documents have similarity >= 0.70 with space-988.txt:
-	data/preprocessed_files/output_space-988.txt.copy1
-	data/preprocessed_files/output_space-988.txt.copy4
-	data/preprocessed_files/output_space-988.txt.copy5
-	data/preprocessed_files/output_space-988.txt.copy2
-	data/preprocessed_files/output_space-988.txt.copy3
-	data/preprocessed_files/output_space-988.txt
-	data/preprocessed_files/output_space-988.txt.copy6
-	data/preprocessed_files/output_space-988.txt.copy7
+The following documents have similarity >= 0.70 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt.copy3
 
 
-The following documents have similarity >= 0.70 with space-987.txt:
-	data/preprocessed_files/output_space-987.txt.copy7
-	data/preprocessed_files/output_space-987.txt.copy4
-	data/preprocessed_files/output_space-987.txt.copy3
-	data/preprocessed_files/output_space-987.txt.copy6
-	data/preprocessed_files/output_space-987.txt
-	data/preprocessed_files/output_space-987.txt.copy5
-	data/preprocessed_files/output_space-987.txt.copy2
-	data/preprocessed_files/output_space-987.txt.copy1
+The following documents have similarity >= 0.70 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt.copy5
 
 
-The following documents have similarity >= 0.70 with space-986.txt:
-	data/preprocessed_files/output_space-986.txt.copy1
-	data/preprocessed_files/output_space-986.txt.copy3
-	data/preprocessed_files/output_space-986.txt.copy2
-	data/preprocessed_files/output_space-986.txt.copy5
-	data/preprocessed_files/output_space-986.txt
-	data/preprocessed_files/output_space-986.txt.copy4
-	data/preprocessed_files/output_space-986.txt.copy7
-	data/preprocessed_files/output_space-986.txt.copy6
+The following documents have similarity >= 0.70 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy4
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt.copy3
 
 
-The following documents have similarity >= 0.70 with space-985.txt:
-	data/preprocessed_files/output_space-985.txt.copy5
-	data/preprocessed_files/output_space-985.txt.copy6
-	data/preprocessed_files/output_space-985.txt.copy7
-	data/preprocessed_files/output_space-985.txt
-	data/preprocessed_files/output_space-985.txt.copy1
-	data/preprocessed_files/output_space-985.txt.copy2
-	data/preprocessed_files/output_space-985.txt.copy3
-	data/preprocessed_files/output_space-985.txt.copy4
-
+The following documents have similarity >= 0.70 with /Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt:
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy7
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy6
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy1
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy3
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy2
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy5
+	/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt.copy4
 ```

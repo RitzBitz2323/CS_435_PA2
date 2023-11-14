@@ -69,7 +69,7 @@ public class MinHashAccuracy {
         for (int permutationIndex = 0; permutationIndex < 3; permutationIndex++) {
             for (int epsilonIndex = 0; epsilonIndex < 3; epsilonIndex++) {
                 long startTime = System.currentTimeMillis();
-                accuracies[permutationIndex * 3 + epsilonIndex] = minHashAccuracy.accuracy("data/space", numPermutations[permutationIndex], epsilons[epsilonIndex]);
+                accuracies[permutationIndex * 3 + epsilonIndex] = minHashAccuracy.accuracy("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/test", numPermutations[permutationIndex], epsilons[epsilonIndex]);
                 long endTime = System.currentTimeMillis();
                 runtimes[permutationIndex * 3 + epsilonIndex] = (endTime - startTime)/1000;
             }

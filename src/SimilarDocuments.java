@@ -37,20 +37,19 @@ public class SimilarDocuments {
     }
 
     public static void main(String[] args) {
-        SimilarDocuments similarDocumentsTest = new SimilarDocuments("data/LSH_Data_Subset/", 400, 0.5);
-        similarDocumentsTest.similaritySearch("space-999.txt");
-        similarDocumentsTest.similaritySearch("space-998.txt");
-        similarDocumentsTest.similaritySearch("space-997.txt");
-        similarDocumentsTest.similaritySearch("space-996.txt");
-        similarDocumentsTest.similaritySearch("space-995.txt");
+        SimilarDocuments similarDocumentsTest = new SimilarDocuments("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset", 400, 0.5);
+        similarDocumentsTest.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-9.txt.copy1");
+        similarDocumentsTest.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-86.txt");
+        similarDocumentsTest.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-87.txt");
+        similarDocumentsTest.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-88.txt");
+        similarDocumentsTest.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-89.txt");
 
-
-        SimilarDocuments similarDocumentsTest2 = new SimilarDocuments("data/LSH_Data_Subset/", 600, 0.7);
-        similarDocumentsTest2.similaritySearch("space-989.txt");
-        similarDocumentsTest2.similaritySearch("space-988.txt");
-        similarDocumentsTest2.similaritySearch("space-987.txt");
-        similarDocumentsTest2.similaritySearch("space-986.txt");
-        similarDocumentsTest2.similaritySearch("space-985.txt");
+        SimilarDocuments similarDocumentsTest2 = new SimilarDocuments("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset", 600, 0.7);
+        similarDocumentsTest2.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-989.txt");
+        similarDocumentsTest2.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-988.txt");
+        similarDocumentsTest2.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-987.txt");
+        similarDocumentsTest2.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-986.txt");
+        similarDocumentsTest2.similaritySearch("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/LSH_Data_Subset/space-985.txt");
     }
 
 }

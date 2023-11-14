@@ -53,8 +53,7 @@ public class LSH {
 
     //finds duplicates of a given document
     public ArrayList<String> retrieveSim(String docName) {
-        String outputFilePath = "data/preprocessed_files/output_" + docName;
-        int docIndex = Arrays.asList(docNames).indexOf(outputFilePath);
+        int docIndex = Arrays.asList(docNames).indexOf(docName);
         if (docIndex == -1) {
             throw new IllegalArgumentException("Document name not found: " + docName);
         }
