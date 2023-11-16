@@ -55,7 +55,8 @@ public class LSH {
     public ArrayList<String> retrieveSim(String docName) {
         int docIndex = Arrays.asList(docNames).indexOf(docName);
         if (docIndex == -1) {
-            throw new IllegalArgumentException("Document name not found: " + docName);
+            throw new IllegalArgumentException("Document name not found: " + docName +
+                    ".\n Please ensure the folder name is correct, and does not contain a trailing slash ( '/' ). ");
         }
         Set<String> temp = new HashSet<>();
 

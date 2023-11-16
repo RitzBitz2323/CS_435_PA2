@@ -129,13 +129,13 @@ public class MinHashSimilarities {
     }
 
     public static void main(String[] args) {
-        MinHashSimilarities minHashSimilarities = new MinHashSimilarities("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space", 500);
+        MinHashSimilarities minHashSimilarities = new MinHashSimilarities("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles", 400);
 
-        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-1.txt"));
-        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-1.txt"));
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball1.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball1.txt"));
         System.out.println();
-        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-2.txt"));
-        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/space/space-2.txt"));
+        System.out.println("Approximate Similarity: " + minHashSimilarities.approximateJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball2.txt"));
+        System.out.println("Actual Similarity: " + minHashSimilarities.exactJaccard("/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball0.txt", "/Users/shivneelakantan/Desktop/CS435/CS_435_PA2/data/articles/baseball2.txt"));
         System.out.println();
     }
 }
